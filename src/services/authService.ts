@@ -1,6 +1,5 @@
 import type { AuthResponse, User } from "@/types";
-import { delay } from "./apiClient";
-import { mockUsers } from "./mockDb";
+import { apiClient } from "./apiClient";
 
 export interface LoginInput {
   email: string;
@@ -14,62 +13,48 @@ export interface RegisterInput {
   password_confirmation: string;
 }
 
-let users = [...mockUsers];
-let nextId = users.length + 1;
-
 export const authService = {
   async login({ email, password }: LoginInput): Promise<AuthResponse> {
-    await delay(600);
-    const found = users.find((u) => u.email.toLowerCase() === email.trim().toLowerCase());
-    if (!found || found.password !== password) {
-      throw { message: "These credentials do not match our records.", status: 401 };
-    }
-    const { password: _pw, ...user } = found;
-    return { token: `mock-token-${user.id}`, user };
+    const res = await apiClient.post<AuthResponse>("/login", {
+      email: email.trim(),
+      password,
+    });
+    return res.data;
   },
 
   async register(input: RegisterInput): Promise<AuthResponse> {
-    await delay(700);
-    if (users.some((u) => u.email.toLowerCase() === input.email.trim().toLowerCase())) {
-      throw { message: "Registration failed.", status: 422, errors: { email: ["This email is already registered."] } };
-    }
-    const created = {
-      id: nextId++,
+    const res = await apiClient.post<AuthResponse>("/register", {
       name: input.name.trim(),
       email: input.email.trim(),
-      role: "user" as const,
       password: input.password,
-      created_at: new Date().toISOString(),
-    };
-    users = [...users, created];
-    const { password: _pw, ...user } = created;
-    return { token: `mock-token-${user.id}`, user };
+      password_confirmation: input.password_confirmation,
+    });
+    return res.data;
   },
 
-  async me(token: string): Promise<User> {
-    await delay(150);
-    const id = Number(token.replace("mock-token-", ""));
-    const found = users.find((u) => u.id === id);
-    if (!found) throw { message: "Unauthenticated.", status: 401 };
-    const { password: _pw, ...user } = found;
-    return user;
+  async me(_token?: string): Promise<User> {
+    const res = await apiClient.get<User>("/user");
+    return res.data;
   },
 
   async logout(): Promise<void> {
-    await delay(150);
+    try {
+      await apiClient.post("/logout");
+    } catch {
+      // Ignore errors on logout
+    }
   },
 
-  async updateProfile(id: number, data: { name: string; email: string }): Promise<User> {
-    await delay(600);
-    const index = users.findIndex((u) => u.id === id);
-    if (index === -1) throw { message: "User not found", status: 404 };
-    const updated = { ...users[index]!, ...data };
-    users = users.map((u) => (u.id === id ? updated : u));
-    const { password: _pw, ...user } = updated;
-    return user;
+  async updateProfile(_id: number, data: { name: string; email: string }): Promise<User> {
+    const res = await apiClient.put<{ message: string; user: User }>("/user", {
+      name: data.name.trim(),
+      email: data.email.trim(),
+    });
+    return res.data.user;
   },
 
-  count(): number {
-    return users.length;
+  async count(): Promise<number> {
+    const res = await apiClient.get<{ total_users: number }>("/admin/statistics");
+    return res.data.total_users;
   },
 };

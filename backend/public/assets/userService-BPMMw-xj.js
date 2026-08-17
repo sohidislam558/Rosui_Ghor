@@ -1,0 +1,1 @@
+import{i as e,r as t}from"./AuthContext-D8Kj__bV.js";var n={async count(){try{return(await e.get(`/admin/statistics`)).data.total_users}catch{return 0}},updateProfile:t.updateProfile};export{n as t};
