@@ -1,6 +1,6 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import { Link } from "@tanstack/react-router";
-import { Image as ImageIcon, Upload, Link2, Eye } from "lucide-react";
+import { Image as ImageIcon, Upload, Link2 } from "lucide-react";
 import type { Category, Difficulty, RecipeInput } from "@/types";
 import { Input, Textarea, Select } from "@/components/common/Input";
 import { Button } from "@/components/common/Button";
@@ -19,7 +19,7 @@ export function RecipeForm({
   categories,
   onSubmit,
   submitLabel = "Save Recipe",
-  isEditing = false,
+  isEditing: _isEditing = false,
 }: RecipeFormProps) {
   const [title, setTitle] = useState(initialValues?.title ?? "");
   const [description, setDescription] = useState(initialValues?.description ?? "");
@@ -28,13 +28,13 @@ export function RecipeForm({
   );
   const [cookingTime, setCookingTime] = useState<number>(initialValues?.cooking_time ?? 30);
   const [difficulty, setDifficulty] = useState<Difficulty>(initialValues?.difficulty ?? "Medium");
-  
+
   // Image source mode: 'url' or 'upload'
   const [imageSource, setImageSource] = useState<"url" | "upload">(
     initialValues?.image_path ? "upload" : "url"
   );
   const [imageUrl, setImageUrl] = useState(initialValues?.image_url ?? "");
-  const [imagePath, setImagePath] = useState<string | null>(initialValues?.image_path ?? null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(
     initialValues?.image_url ?? initialValues?.image_path ?? null
   );
@@ -49,12 +49,11 @@ export function RecipeForm({
   const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setImageFile(file);
+      setImageUrl("");
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64 = reader.result as string;
-        setImagePath(base64);
-        setImageUrl("");
-        setPreviewUrl(base64);
+        setPreviewUrl(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -62,7 +61,7 @@ export function RecipeForm({
 
   const handleUrlChange = (url: string) => {
     setImageUrl(url);
-    setImagePath(null);
+    setImageFile(null);
     setPreviewUrl(url.trim() ? url.trim() : null);
   };
 
@@ -94,7 +93,8 @@ export function RecipeForm({
         cooking_time: Number(cookingTime),
         difficulty,
         image_url: imageSource === "url" && imageUrl.trim() ? imageUrl.trim() : null,
-        image_path: imageSource === "upload" && imagePath ? imagePath : null,
+        image_path: null,
+        image: imageSource === "upload" ? imageFile : null,
         ingredients: ingredients.trim(),
         instructions: instructions.trim(),
       });
@@ -254,7 +254,7 @@ export function RecipeForm({
                   onChange={handleFileUpload}
                   className="w-full rounded-md border border-border bg-card px-3 py-2 text-sm text-foreground file:mr-4 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-1 file:text-xs file:font-semibold file:text-primary-foreground hover:file:bg-primary-hover"
                 />
-                <p className="text-xs text-muted-foreground">Supported formats: JPG, PNG, WEBP</p>
+                <p className="text-xs text-muted-foreground">Supported formats: JPG, PNG, WEBP, AVIF (Max 2MB)</p>
               </div>
             )}
           </div>

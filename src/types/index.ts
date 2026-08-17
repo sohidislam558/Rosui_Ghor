@@ -73,8 +73,9 @@ export interface RecipeInput {
   cooking_time: number;
   difficulty: Difficulty;
   instructions: string;
-  image_url: string | null;
-  image_path: string | null;
+  image_url?: string | null | undefined;
+  image_path?: string | null | undefined;
+  image?: File | null | undefined;
 }
 
 export interface CategoryInput {
