@@ -10,33 +10,167 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminCategoriesRouteImport } from './routes/admin/categories'
+import { Route as RecipesIndexRouteImport } from './routes/recipes/index'
+import { Route as RecipesIdRouteImport } from './routes/recipes/$id'
+import { Route as AdminRecipesIndexRouteImport } from './routes/admin/recipes/index'
+import { Route as AdminRecipesCreateRouteImport } from './routes/admin/recipes/create'
+import { Route as AdminRecipesIdEditRouteImport } from './routes/admin/recipes/$id.edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
+  id: '/admin/categories',
+  path: '/admin/categories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecipesIndexRoute = RecipesIndexRouteImport.update({
+  id: '/recipes/',
+  path: '/recipes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecipesIdRoute = RecipesIdRouteImport.update({
+  id: '/recipes/$id',
+  path: '/recipes/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRecipesIndexRoute = AdminRecipesIndexRouteImport.update({
+  id: '/admin/recipes/',
+  path: '/admin/recipes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRecipesCreateRoute = AdminRecipesCreateRouteImport.update({
+  id: '/admin/recipes/create',
+  path: '/admin/recipes/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRecipesIdEditRoute = AdminRecipesIdEditRouteImport.update({
+  id: '/admin/recipes/$id/edit',
+  path: '/admin/recipes/$id/edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/recipes/$id': typeof RecipesIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/recipes/': typeof RecipesIndexRoute
+  '/admin/recipes/create': typeof AdminRecipesCreateRoute
+  '/admin/recipes/': typeof AdminRecipesIndexRoute
+  '/admin/recipes/$id/edit': typeof AdminRecipesIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/recipes/$id': typeof RecipesIdRoute
+  '/admin': typeof AdminIndexRoute
+  '/recipes': typeof RecipesIndexRoute
+  '/admin/recipes/create': typeof AdminRecipesCreateRoute
+  '/admin/recipes': typeof AdminRecipesIndexRoute
+  '/admin/recipes/$id/edit': typeof AdminRecipesIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/recipes/$id': typeof RecipesIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/recipes/': typeof RecipesIndexRoute
+  '/admin/recipes/create': typeof AdminRecipesCreateRoute
+  '/admin/recipes/': typeof AdminRecipesIndexRoute
+  '/admin/recipes/$id/edit': typeof AdminRecipesIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/profile'
+    | '/register'
+    | '/admin/categories'
+    | '/recipes/$id'
+    | '/admin/'
+    | '/recipes/'
+    | '/admin/recipes/create'
+    | '/admin/recipes/'
+    | '/admin/recipes/$id/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/profile'
+    | '/register'
+    | '/admin/categories'
+    | '/recipes/$id'
+    | '/admin'
+    | '/recipes'
+    | '/admin/recipes/create'
+    | '/admin/recipes'
+    | '/admin/recipes/$id/edit'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/profile'
+    | '/register'
+    | '/admin/categories'
+    | '/recipes/$id'
+    | '/admin/'
+    | '/recipes/'
+    | '/admin/recipes/create'
+    | '/admin/recipes/'
+    | '/admin/recipes/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LoginRoute: typeof LoginRoute
+  ProfileRoute: typeof ProfileRoute
+  RegisterRoute: typeof RegisterRoute
+  AdminCategoriesRoute: typeof AdminCategoriesRoute
+  RecipesIdRoute: typeof RecipesIdRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  RecipesIndexRoute: typeof RecipesIndexRoute
+  AdminRecipesCreateRoute: typeof AdminRecipesCreateRoute
+  AdminRecipesIndexRoute: typeof AdminRecipesIndexRoute
+  AdminRecipesIdEditRoute: typeof AdminRecipesIdEditRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +182,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/categories': {
+      id: '/admin/categories'
+      path: '/admin/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AdminCategoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/': {
+      id: '/recipes/'
+      path: '/recipes'
+      fullPath: '/recipes/'
+      preLoaderRoute: typeof RecipesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/$id': {
+      id: '/recipes/$id'
+      path: '/recipes/$id'
+      fullPath: '/recipes/$id'
+      preLoaderRoute: typeof RecipesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/recipes/': {
+      id: '/admin/recipes/'
+      path: '/admin/recipes'
+      fullPath: '/admin/recipes/'
+      preLoaderRoute: typeof AdminRecipesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/recipes/create': {
+      id: '/admin/recipes/create'
+      path: '/admin/recipes/create'
+      fullPath: '/admin/recipes/create'
+      preLoaderRoute: typeof AdminRecipesCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/recipes/$id/edit': {
+      id: '/admin/recipes/$id/edit'
+      path: '/admin/recipes/$id/edit'
+      fullPath: '/admin/recipes/$id/edit'
+      preLoaderRoute: typeof AdminRecipesIdEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LoginRoute: LoginRoute,
+  ProfileRoute: ProfileRoute,
+  RegisterRoute: RegisterRoute,
+  AdminCategoriesRoute: AdminCategoriesRoute,
+  RecipesIdRoute: RecipesIdRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  RecipesIndexRoute: RecipesIndexRoute,
+  AdminRecipesCreateRoute: AdminRecipesCreateRoute,
+  AdminRecipesIndexRoute: AdminRecipesIndexRoute,
+  AdminRecipesIdEditRoute: AdminRecipesIdEditRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
