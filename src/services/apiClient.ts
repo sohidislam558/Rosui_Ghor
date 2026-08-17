@@ -2,9 +2,11 @@ import axios from "axios";
 
 /**
  * Axios instance configured for the Laravel REST API backend.
+ * Uses relative `/api` by default when served from Laravel on the same origin,
+ * or the explicit `VITE_API_URL` environment variable if set.
  */
 export const apiClient = axios.create({
-  baseURL: import.meta.env["VITE_API_URL"] ?? "http://localhost:8000/api",
+  baseURL: import.meta.env["VITE_API_URL"] || "/api",
   headers: {
     Accept: "application/json",
   },
