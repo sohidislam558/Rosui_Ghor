@@ -75,9 +75,7 @@ async function syncFrontend() {
 
     const targetIndexPath = path.join(backendPublicDir, "index.html");
     fs.writeFileSync(targetIndexPath, html, "utf-8");
-    console.log(
-      `✅ Generated production index.html at ${targetIndexPath} (${html.length} bytes)`,
-    );
+    console.log(`✅ Generated production index.html at ${targetIndexPath} (${html.length} bytes)`);
   } catch (err) {
     console.error("⚠️ Failed to generate index.html via SSR renderer:", err.message);
 
