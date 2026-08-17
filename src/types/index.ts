@@ -12,7 +12,7 @@ export interface Category {
   id: number;
   name: string;
   description: string;
-  recipes_count?: number;
+  recipes_count?: number | undefined;
   created_at: string;
 }
 
@@ -21,7 +21,7 @@ export type Difficulty = "Easy" | "Medium" | "Hard";
 export interface Recipe {
   id: number;
   category_id: number;
-  category?: Category;
+  category?: Category | undefined;
   title: string;
   description: string;
   image_url: string | null;
@@ -49,8 +49,8 @@ export interface AuthResponse {
 
 export interface ApiError {
   message: string;
-  errors?: Record<string, string[]>;
-  status?: number;
+  errors?: Record<string, string[]> | undefined;
+  status?: number | undefined;
 }
 
 export interface Pagination {

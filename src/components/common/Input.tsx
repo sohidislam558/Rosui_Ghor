@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
+import type { InputHTMLAttributes, TextareaHTMLAttributes, ReactNode, SelectHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
 const fieldClass =
@@ -7,11 +7,11 @@ const fieldClass =
 interface FieldWrapperProps {
   label: string;
   htmlFor: string;
-  error?: string;
-  hint?: string;
-  required?: boolean;
-  children: React.ReactNode;
-  className?: string;
+  error?: string | undefined;
+  hint?: string | undefined;
+  required?: boolean | undefined;
+  children: ReactNode;
+  className?: string | undefined;
 }
 
 export function Field({ label, htmlFor, error, hint, required, children, className }: FieldWrapperProps) {
@@ -34,8 +34,8 @@ export function Field({ label, htmlFor, error, hint, required, children, classNa
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  error?: string;
-  hint?: string;
+  error?: string | undefined;
+  hint?: string | undefined;
 }
 
 export function Input({ label, error, hint, id, className, required, ...props }: InputProps) {
@@ -56,8 +56,8 @@ export function Input({ label, error, hint, id, className, required, ...props }:
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string;
-  error?: string;
-  hint?: string;
+  error?: string | undefined;
+  hint?: string | undefined;
 }
 
 export function Textarea({ label, error, hint, id, className, required, ...props }: TextareaProps) {
@@ -76,10 +76,10 @@ export function Textarea({ label, error, hint, id, className, required, ...props
   );
 }
 
-interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
-  error?: string;
-  hint?: string;
+  error?: string | undefined;
+  hint?: string | undefined;
 }
 
 export function Select({ label, error, hint, id, className, required, children, ...props }: SelectProps) {
