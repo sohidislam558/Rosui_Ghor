@@ -2,7 +2,13 @@ import { AlertTriangle, Loader2, SearchX, ShieldAlert } from "lucide-react";
 import { Button } from "./Button";
 import { cn } from "@/lib/utils";
 
-export function LoadingIndicator({ label = "Loading…", className }: { label?: string; className?: string }) {
+export function LoadingIndicator({
+  label = "Loading…",
+  className,
+}: {
+  label?: string | undefined;
+  className?: string | undefined;
+}) {
   return (
     <div role="status" className={cn("flex flex-col items-center gap-3 py-16 text-muted-foreground", className)}>
       <Loader2 className="h-6 w-6 animate-spin text-primary" aria-hidden="true" />
@@ -26,10 +32,10 @@ export function RecipeCardSkeleton() {
 
 interface StateProps {
   title: string;
-  description?: string;
-  actionLabel?: string;
-  onAction?: () => void;
-  className?: string;
+  description?: string | undefined;
+  actionLabel?: string | undefined;
+  onAction?: (() => void) | undefined;
+  className?: string | undefined;
 }
 
 export function EmptyState({ title, description, actionLabel, onAction, className }: StateProps) {

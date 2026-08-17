@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 interface NavItem {
   label: string;
   to: string;
-  hash?: string;
+  hash?: string | undefined;
 }
 
 const guestNav: NavItem[] = [
@@ -46,21 +46,23 @@ export function Navbar() {
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
       <div className="container-page grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 py-3 lg:py-4">
         <Link to="/" className="flex min-w-0 items-center gap-2" onClick={() => setOpen(false)}>
-          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground shadow-xs">
             <CookingPot className="h-5 w-5" aria-hidden="true" />
           </span>
-          <span className="truncate font-display text-xl font-bold tracking-tight sm:text-2xl">Rosui Ghor</span>
+          <span className="truncate font-display text-xl font-bold tracking-tight sm:text-2xl text-foreground">
+            Rosui Ghor
+          </span>
         </Link>
 
         <nav aria-label="Main" className="hidden items-center gap-1 md:flex">
           {items.map((item) => (
             <Link
               key={item.label}
-              to={item.to}
-              hash={item.hash}
-              className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              to={item.to as any}
+              {...(item.hash ? { hash: item.hash } : {})}
+              className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               activeOptions={{ exact: item.to === "/" && !item.hash, includeHash: false }}
-              activeProps={{ className: "text-foreground" }}
+              activeProps={{ className: "text-foreground font-semibold bg-muted/60" }}
             >
               {item.label}
             </Link>
@@ -68,7 +70,9 @@ export function Navbar() {
           <span className="mx-2 h-6 w-px bg-border" aria-hidden="true" />
           {isAuthenticated ? (
             <>
-              <span className="max-w-36 truncate px-2 text-sm text-muted-foreground">{user?.name}</span>
+              <span className="max-w-36 truncate px-2 text-sm text-muted-foreground font-medium">
+                {user?.name}
+              </span>
               <Button variant="secondary" size="sm" onClick={handleLogout}>
                 <LogOut className="h-4 w-4" aria-hidden="true" />
                 Logout
@@ -76,12 +80,17 @@ export function Navbar() {
             </>
           ) : (
             <>
-              <Link to="/login" className={cn("rounded-md px-3 py-2 text-sm font-medium hover:bg-muted")}>
+              <Link
+                to="/login"
+                className={cn(
+                  "rounded-lg px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+                )}
+              >
                 Login
               </Link>
               <Link
                 to="/register"
-                className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover"
+                className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-xs transition-colors hover:bg-primary-hover"
               >
                 Register
               </Link>
@@ -91,7 +100,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className="grid h-11 w-11 place-items-center rounded-md border border-border md:hidden"
+          className="grid h-11 w-11 place-items-center rounded-lg border border-border bg-card md:hidden shadow-xs"
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -105,16 +114,16 @@ export function Navbar() {
         <nav
           id="mobile-nav"
           aria-label="Mobile"
-          className="border-t border-border bg-card md:hidden animate-in slide-in-from-top-2 duration-200"
+          className="border-t border-border bg-card md:hidden animate-in slide-in-from-top-2 duration-200 shadow-card"
         >
           <div className="container-page flex flex-col py-3">
             {items.map((item) => (
               <Link
                 key={item.label}
-                to={item.to}
-                hash={item.hash}
+                to={item.to as any}
+                {...(item.hash ? { hash: item.hash } : {})}
                 onClick={() => setOpen(false)}
-                className="rounded-md px-2 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted"
+                className="rounded-lg px-3 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted"
               >
                 {item.label}
               </Link>
@@ -130,14 +139,14 @@ export function Navbar() {
                   <Link
                     to="/login"
                     onClick={() => setOpen(false)}
-                    className="flex h-11 items-center justify-center rounded-md border border-border text-sm font-medium"
+                    className="flex h-11 items-center justify-center rounded-lg border border-border text-sm font-medium text-foreground hover:bg-muted"
                   >
                     Login
                   </Link>
                   <Link
                     to="/register"
                     onClick={() => setOpen(false)}
-                    className="flex h-11 items-center justify-center rounded-md bg-primary text-sm font-medium text-primary-foreground"
+                    className="flex h-11 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground hover:bg-primary-hover shadow-xs"
                   >
                     Register
                   </Link>
