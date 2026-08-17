@@ -28,9 +28,10 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     // Standardize error payload
-    const message = error.response?.data?.message || error.message || "An unexpected error occurred.";
+    const message =
+      error.response?.data?.message || error.message || "An unexpected error occurred.";
     const errors = error.response?.data?.errors;
     const status = error.response?.status;
     return Promise.reject({ message, errors, status, raw: error });
-  }
+  },
 );
