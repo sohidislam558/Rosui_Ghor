@@ -32,6 +32,8 @@ Key expectations from the frontend:
 | `POST` | `/api/register` | Public | `AuthController@register` | Register a new user account |
 | `POST` | `/api/login` | Public | `AuthController@login` | Authenticate user & return Sanctum token |
 | `POST` | `/api/logout` | Authenticated | `AuthController@logout` | Invalidate current user Sanctum token |
+| `POST` | `/api/forgot-password` | Public | `AuthController@forgotPassword` | Request password reset link |
+| `POST` | `/api/reset-password` | Public | `AuthController@resetPassword` | Complete password reset using token |
 | `GET` | `/api/user` | Authenticated | `UserController@show` | Return current authenticated user profile |
 | `PUT` | `/api/user` | Authenticated | `UserController@update` | Update current user name / email |
 | `GET` | `/api/recipes` | Public | `RecipeController@index` | List recipe previews (search, filter, pagination) |

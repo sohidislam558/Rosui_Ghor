@@ -99,6 +99,16 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
           onChange={(e) => setPassword(e.target.value)}
         />
 
+        {/* Forgot Password Link */}
+        <div className="flex justify-end mt-2">
+          <Link
+            to="/forgot-password"
+            className="text-sm font-medium text-primary hover:underline"
+          >
+            Forgot Password?
+          </Link>
+        </div>
+
         <Button type="submit" variant="primary" block size="lg" loading={loading} className="mt-2">
           Sign in
         </Button>

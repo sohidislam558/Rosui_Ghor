@@ -58,3 +58,27 @@ export const authService = {
     return res.data.total_users;
   },
 };
+
+export const forgotPassword = async (email: string) => {
+  const response = await apiClient.post('/forgot-password', {
+    email,
+  });
+
+  return response.data;
+};
+
+export const resetPassword = async (
+  email: string,
+  token: string,
+  password: string,
+  password_confirmation: string
+) => {
+  const response = await apiClient.post('/reset-password', {
+    email,
+    token,
+    password,
+    password_confirmation,
+  });
+
+  return response.data; 
+}; 

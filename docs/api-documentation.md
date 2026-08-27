@@ -103,6 +103,70 @@
 
 ---
 
+### 1.4 Forgot Password
+
+- **Method**: `POST`
+- **URI**: `/forgot-password`
+- **Access**: Public
+- **Request Body**:
+
+  ```json
+  {
+    "email": "user@rosuighor.test"
+  }
+  ```
+
+- **Validation Rules**:
+  - `email`: required | email
+- **Response (200 OK)**:
+
+  ```json
+  {
+    "message": "If an account with that email exists, a password reset link has been sent."
+  }
+  ```
+
+---
+
+### 1.5 Reset Password
+
+- **Method**: `POST`
+- **URI**: `/reset-password`
+- **Access**: Public
+- **Request Body**:
+
+  ```json
+  {
+    "token": "reset_token_from_email_link",
+    "email": "user@rosuighor.test",
+    "password": "newSecurePassword123",
+    "password_confirmation": "newSecurePassword123"
+  }
+  ```
+
+- **Validation Rules**:
+  - `token`: required
+  - `email`: required | email
+  - `password`: required | confirmed | min:8
+  - `password_confirmation`: required
+- **Response (200 OK)**:
+
+  ```json
+  {
+    "message": "Password has been reset successfully."
+  }
+  ```
+
+- **Response (400 Bad Request / Invalid Token or Email)**:
+
+  ```json
+  {
+    "message": "This password reset token is invalid."
+  }
+  ```
+
+---
+
 ## 2. User Profile Endpoints
 
 ### 2.1 Get Current User Profile

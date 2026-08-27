@@ -23,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+// Password Reset
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::post('/reset-password', [AuthController::class, 'resetPassword']); 
+
 // Public Recipes & Categories Discovery
 Route::get('/recipes', [RecipeController::class, 'index']);
 Route::get('/categories', [CategoryController::class, 'index']);

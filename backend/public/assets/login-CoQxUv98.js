@@ -1,0 +1,2 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/login-DCs-_09c.js","assets/AuthContext-OHcREJh2.js","assets/Navbar-kNeUUtbR.js","assets/Alert-BfTqwjA3.js","assets/Input-fK6KzICq.js","assets/SiteLayout-Crfj2GPN.js"])))=>i.map(i=>d[i]);
+import{n as e,r as t,t as n}from"./preload-helper-COD1BJvb.js";var r=t(`/login`)({validateSearch:e=>({redirect:typeof e.redirect==`string`?e.redirect:void 0}),component:e(()=>n(()=>import(`./login-DCs-_09c.js`),__vite__mapDeps([0,1,2,3,4,5])),`component`)});export{r as t};

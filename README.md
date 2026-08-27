@@ -60,9 +60,10 @@ Rosui_Ghor/
 ├── src/                      # React 19 Frontend Application
 │   ├── components/           # UI components (auth, recipe, admin, user, common)
 │   ├── context/              # AuthContext for session management
-│   ├── routes/               # 11 TanStack Router route views
+│   ├── routes/               # 14 TanStack Router route views (auth, recipes, admin, profile, password reset)
 │   ├── services/             # Axios API client and service layer
 │   └── types/                # TypeScript interface definitions
+├── scripts/                  # Build & asset synchronization scripts
 ├── package.json              # Frontend dependencies
 ├── vite.config.ts            # Vite configuration
 └── README.md                 # Project documentation
@@ -176,29 +177,41 @@ php artisan storage:link
 
 ---
 
-## 🚦 Running Locally
+## 🚦 Running the Application
 
-### Start the Laravel Backend API
+You can run Rosui Ghor in two ways:
 
-In one terminal window, run:
+### Mode A: Integrated Full-Stack Mode (Single Server)
+In this mode, Laravel serves both the React SPA and the REST API from port `8000`:
 
-```bash
-cd backend
-php artisan serve --port=8000
-```
+1. Build the frontend and sync assets to Laravel's public directory:
+   ```bash
+   # In workspace root:
+   npm run build
+   ```
+2. Start the Laravel server:
+   ```bash
+   cd backend
+   php artisan serve --port=8000
+   ```
+3. Open `http://127.0.0.1:8000` in your browser.
 
-Backend API will be accessible at `http://127.0.0.1:8000/api`.
+---
 
-### Start the React Frontend
+### Mode B: Active Development Mode (Hot Module Replacement)
+In this mode, Vite runs the React frontend with instant hot-reloading:
 
-In a second terminal window, run:
-
-```bash
-# From workspace root:
-npm run dev
-```
-
-Frontend application will be accessible at `http://localhost:8080/` (or `http://localhost:5173/`).
+1. In Terminal 1 (Backend API):
+   ```bash
+   cd backend
+   php artisan serve --port=8000
+   ```
+2. In Terminal 2 (Frontend Dev Server):
+   ```bash
+   # In workspace root:
+   npm run dev
+   ```
+3. Open the Vite URL (e.g. `http://localhost:3000` or `http://localhost:5173`). All source edits in `src/` reload instantly!
 
 ---
 

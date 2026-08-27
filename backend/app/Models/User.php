@@ -56,4 +56,18 @@ class User extends Authenticatable
     {
         return $this->hasMany(RecipeInteraction::class);
     }
+
+    /**
+     * Send the password reset notification pointing to the React frontend.
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $frontendUrl = env('FRONTEND_URL', 'http://localhost:5173');
+
+        \Illuminate\Auth\Notifications\ResetPassword::createUrlUsing(function ($notifiable, $token) use ($frontendUrl) {
+            return $frontendUrl . '/reset-password?token=' . $token . '&email=' . urlencode($notifiable->email);
+        });
+
+        $this->notify(new \Illuminate\Auth\Notifications\ResetPassword($token));
+    }
 }

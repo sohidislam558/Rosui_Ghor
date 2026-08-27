@@ -65,8 +65,8 @@
 
 ## 6. API Endpoint Status
 
-- **Total API Routes Registered**: 18
-- **Public Routes**: `/api/register`, `/api/login`, `/api/recipes`, `/api/categories`, `/api/categories/{id}`.
+- **Total API Routes Registered**: 20
+- **Public Routes**: `/api/register`, `/api/login`, `/api/forgot-password`, `/api/reset-password`, `/api/recipes`, `/api/categories`, `/api/categories/{id}`.
 - **Authenticated Routes**: `/api/logout`, `/api/user`, `/api/recipes/{id}`, `/api/recipes/{recipe}/interactions`.
 - **Admin Routes**: `/api/admin/statistics`, `/api/recipes` (store/update/destroy), `/api/categories` (store/update/destroy).
 - **Status**: **PASSED**
