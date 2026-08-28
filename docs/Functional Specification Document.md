@@ -131,7 +131,86 @@ After logout, protected pages and API endpoints must no longer be accessible.
 
 ---
 
-## 6. Authentication State
+## 6. Forgot Password (Password Reset Request)
+
+### Workflow
+
+```text
+Guest / User
+      ↓
+Forgot Password Page (/forgot-password)
+      ↓
+Enter Email Address
+      ↓
+Client Validation (Non-empty, valid email format)
+      ↓
+POST /api/forgot-password
+      ↓
+Laravel Password Broker (Generates reset token & dispatches email notification)
+      ↓
+Privacy-Safe Response (200 OK)
+      ↓
+Display Confirmation Alert ("If an account with that email exists, a password reset link has been sent.")
+```
+
+### Required Fields
+
+| Field | Required | Rules |
+| :--- | :--- | :--- |
+| Email | Yes | Valid email syntax |
+
+### Privacy & Security Constraints
+
+- The backend always returns HTTP 200 with a generic confirmation message regardless of whether the email exists in the database.
+- This prevents user enumeration and reconnaissance attacks.
+- Reset tokens are stored hashed in the `password_reset_tokens` table with an expiration timestamp (default 60 minutes).
+
+---
+
+## 7. Reset Password (Password Update)
+
+### Workflow
+
+```text
+User opens reset link from email
+      ↓
+Reset Password Page (/reset-password?token=...&email=...)
+      ↓
+System checks URL query parameters
+      ├── Missing token or email → Display Invalid Link Alert
+      └── Valid parameters present → Display New Password Form
+            ↓
+      Enter New Password & Confirm Password
+            ↓
+      Client Validation (min 8 characters, password confirmation match)
+            ↓
+      POST /api/reset-password
+            ↓
+      Laravel Password Broker Validates Token & Hashes New Password
+            ├── Invalid / Expired Token → HTTP 400 with Error Notice
+            └── Valid Token → Update Password, Rotate Token, Return HTTP 200
+                  ↓
+            Display Success Alert & Redirect to /login after 2.5s
+```
+
+### Required Fields
+
+| Field | Required | Rules |
+| :--- | :--- | :--- |
+| Token | Yes | Valid unexpired reset token from URL query string |
+| Email | Yes | Valid email matching token record |
+| Password | Yes | Minimum 8 characters |
+| Password Confirmation | Yes | Must exactly match `password` |
+
+### Edge Cases & Failure Handling
+
+- **Missing Query Parameters**: If a user navigates to `/reset-password` without `token` or `email`, the form is hidden and an "Invalid Reset Link" alert is shown with an option to request a new link.
+- **Expired Token**: If the reset link has expired, the API returns a 400 Bad Request error. The user is notified and prompted to request a new link.
+- **Password Mismatch**: Client-side validation stops form submission if password and password confirmation do not match.
+
+---
+
+## 8. Authentication State
 
 The frontend should maintain a simple authentication state containing the information required to determine:
 
@@ -154,7 +233,7 @@ No complex state management architecture is required.
 
 ---
 
-## 7. Role-Based Authorization
+## 9. Role-Based Authorization
 
 ### Permission Matrix
 
@@ -166,6 +245,8 @@ No complex state management architecture is required.
 | Filter Recipes            |   Yes |  Yes |   Yes |
 | View Complete Recipe      |    No |  Yes |   Yes |
 | Create User Account       |   Yes |   No |    No |
+| Request Password Reset    |   Yes |  Yes |   Yes |
+| Submit Password Reset     |   Yes |  Yes |   Yes |
 | View Own Profile          |    No |  Yes |   Yes |
 | Update Own Profile        |    No |  Yes |   Yes |
 | Create Recipe             |    No |   No |   Yes |
@@ -875,6 +956,19 @@ Dependency Check
 
 - Email required.
 - Password required.
+
+### Forgot Password (Reset Link Request)
+
+- Email required.
+- Email must be a valid email format.
+
+### Reset Password (Password Update)
+
+- Token required (provided via reset link).
+- Email required.
+- Email must be a valid email format.
+- Password required (minimum 8 characters).
+- Password confirmation required (must match password).
 
 ### Category
 

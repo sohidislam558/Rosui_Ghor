@@ -157,6 +157,7 @@ The minimum viable product contains:
 - User registration
 - User login
 - User logout
+- Password reset / forgot password flow
 - Role-based authentication
 - Recipe listing
 - Recipe cards
@@ -494,7 +495,26 @@ No email verification or OTP is required.
 
 ---
 
-## 19. User Profile
+## 19. Password Reset & Recovery
+
+The application supports a secure password reset workflow:
+
+1. **Request Reset Link (`/forgot-password`)**:
+   - User inputs their registered email address.
+   - Client sends request to `POST /api/forgot-password`.
+   - Backend utilizes Laravel's Password Broker to generate a secure reset token stored in `password_reset_tokens`.
+   - The API always returns a 200 OK status with a privacy-safe message to prevent email enumeration.
+
+2. **Execute Password Reset (`/reset-password`)**:
+   - User navigates to the reset page via email link carrying query parameters: `?token=...&email=...`.
+   - User specifies a new password (min 8 characters) and matching confirmation.
+   - Client sends request to `POST /api/reset-password`.
+   - Backend validates the token and updates the user's password using `Hash::make()`.
+   - Upon success, the UI displays a confirmation alert and automatically redirects to `/login`.
+
+---
+
+## 20. User Profile
 
 The profile is intentionally simple.
 

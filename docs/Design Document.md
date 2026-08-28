@@ -887,29 +887,79 @@ No horizontal two-column layout should remain on small screens.
 
 ## 31. Authentication Pages
 
-Login and registration pages should be visually simple.
+Authentication pages (Login, Registration, Forgot Password, Reset Password) share a unified, focused card layout on a warm background.
 
-Recommended layout:
+### 31.1 Login Page (`/login`)
 
 ```text
 ┌─────────────────────────────────────┐
 │                                     │
-│            Rosui Ghor               │
+│            🍲 Rosui Ghor            │
+│            Welcome Back             │
 │                                     │
-│            Welcome Back              │
-│                                     │
-│ Email                               │
-│ [_______________________________]   │
+│ Email address                       │
+│ [ user@rosuighor.test             ] │
 │                                     │
 │ Password                            │
-│ [_______________________________]   │
+│ [ ••••••••                        ] │
 │                                     │
-│ [           Login               ]   │
+│ [ Forgot password?                ] │
 │                                     │
-│ Don't have an account? Register     │
+│ [           Sign In               ] │
+│                                     │
+│ Don't have an account? Sign up      │
 │                                     │
 └─────────────────────────────────────┘
 ```
+
+### 31.2 Forgot Password Page (`/forgot-password`)
+
+```text
+┌─────────────────────────────────────┐
+│                                     │
+│            🍲 Rosui Ghor            │
+│           Forgot Password?          │
+│   Enter your email to reset pass    │
+│                                     │
+│ Email address                       │
+│ [ user@rosuighor.test             ] │
+│                                     │
+│ [       Send Reset Link           ] │
+│                                     │
+│ ← Back to Sign In                   │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+### 31.3 Reset Password Page (`/reset-password?token=...&email=...`)
+
+```text
+┌─────────────────────────────────────┐
+│                                     │
+│            🍲 Rosui Ghor            │
+│         Set a New Password          │
+│   Choose a strong password (min 8)  │
+│                                     │
+│ New password                        │
+│ [ ••••••••                        ] │
+│                                     │
+│ Confirm new password                │
+│ [ ••••••••                        ] │
+│                                     │
+│ [        Reset Password           ] │
+│                                     │
+│ ← Back to Sign In                   │
+│                                     │
+└─────────────────────────────────────┘
+```
+
+### 31.4 Feedback & Alert Banners
+
+Authentication forms provide clear, contextual feedback banners:
+
+- **Success Alert**: Green container with checkmark icon (e.g., *"If an account with that email exists, a password reset link has been sent."* or *"Password reset successfully! Redirecting you to the sign-in page..."*).
+- **Error Alert**: Red container with alert icon for invalid credentials, expired tokens, or validation mismatches.
+- **Invalid Link Banner**: Warning state when `token` or `email` parameters are missing from `/reset-password`.
 
 ---
 

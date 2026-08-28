@@ -64,12 +64,14 @@ Recommended core tables:
 
 ```text
 users
+password_reset_tokens
+personal_access_tokens
 categories
 recipes
 recipe_interactions
 ```
 
-Laravel's standard authentication-related migration structure may be used where appropriate.
+Laravel's standard authentication-related migration structure is used to support API tokens and secure password reset workflows.
 
 ---
 
@@ -199,7 +201,30 @@ admin
 
 ---
 
-## 6. Categories Table
+## 6. Password Reset Tokens Table (`password_reset_tokens`)
+
+### Purpose
+
+Stores temporary cryptographic reset tokens generated when users trigger the forgot password workflow. Managed directly by Laravel's password broker.
+
+### Structure
+
+| Column     | Type         | Constraints | Description                                       |
+| :--------- | :----------- | :---------- | :------------------------------------------------ |
+| email      | VARCHAR(255) | PRIMARY KEY | User email associated with the reset request      |
+| token      | VARCHAR(255) | NOT NULL    | Cryptographically secure hashed reset token string |
+| created_at | TIMESTAMP    | NULL        | Token creation timestamp for expiration checks    |
+
+### Token Lifecycle & Expiration
+
+- **Creation**: When a user submits their email to `POST /api/forgot-password`, an existing token for the email is replaced and a new record is created with `created_at = NOW()`.
+- **Validation**: When the user submits the new password to `POST /api/reset-password`, the token hash is validated against the stored record.
+- **Expiration Window**: Tokens expire automatically after 60 minutes (`config/auth.php` password broker setting). Expired tokens are rejected with HTTP 400.
+- **Cleanup**: Once a password reset is successfully completed, the corresponding token row is immediately deleted from `password_reset_tokens`.
+
+---
+
+## 7. Categories Table
 
 ### Purpose
 

@@ -46,6 +46,8 @@
 | `/` | Public | Hero section, featured recipes, category discovery cards, latest recipes, call-to-action, footer. | **PASSED** |
 | `/login` | Public | Email and password inputs, demo credentials buttons, inline validation, role-aware redirect. | **PASSED** |
 | `/register` | Public | Name, email, password, password confirmation with client-side validation rules. | **PASSED** |
+| `/forgot-password` | Public | Email input form, client validation, request submission to `/api/forgot-password`, success/error alert banners, link back to sign-in. | **PASSED** |
+| `/reset-password` | Public | Query param verification (`token`, `email`), new password inputs, min length & match validation, submission to `/api/reset-password`, auto-redirect to `/login`. | **PASSED** |
 | `/recipes` | Public / User | Instant search by title, category filter pills, responsive grid (1–4 columns), pagination, empty state fallback. | **PASSED** |
 | `/recipes/:id` | Authenticated Only | Protected route: unauthenticated visitors are redirected to `/login?redirect=...`. Authenticated users see full recipe image, metadata, ingredients, numbered steps, and favorite button. | **PASSED** |
 | `/profile` | Authenticated Only | Displays account avatar, name, email, role badge, join date, editable profile form, and sign out action. | **PASSED** |

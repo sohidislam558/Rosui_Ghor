@@ -138,7 +138,9 @@ Required route groups:
 Public
 ├── /
 ├── /login
-└── /register
+├── /register
+├── /forgot-password
+└── /reset-password
 
 User
 ├── /recipes
@@ -226,6 +228,8 @@ Forms include:
 
 - Login
 - Registration
+- Forgot Password (reset link request)
+- Reset Password (password update)
 - Profile
 - Recipe creation
 - Recipe editing
@@ -405,6 +409,14 @@ React receives authentication state
 ```
 
 Protected requests must include the appropriate authentication credentials according to the Sanctum setup.
+
+### Password Reset (Password Broker)
+
+Password recovery is powered by Laravel's built-in `Password` broker facade:
+
+- **Link Request (`POST /api/forgot-password`)**: Dispatches `Password::sendResetLink()`, creating a record in `password_reset_tokens`.
+- **Reset Execution (`POST /api/reset-password`)**: Executes `Password::reset()`, verifying the token signature against the expiration window, updating the user's password using `Hash::make()`, and purging the token.
+- **Enumeration Defense**: The API always responds with a success message to prevent user enumeration.
 
 ---
 

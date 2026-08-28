@@ -257,6 +257,8 @@ Responsibilities:
 - Registration
 - Login
 - Logout
+- Password reset request (forgot password)
+- Password reset execution (token verification & password update)
 - Authentication state
 - Role identification
 - Protected routes
@@ -393,6 +395,22 @@ The system shall authenticate credentials and determine the user's role.
 Authenticated users shall be able to logout.
 
 Logout shall invalidate the authenticated session/token according to the selected Laravel authentication implementation.
+
+---
+
+### FR-003A Password Reset Request (Forgot Password)
+
+The system shall allow visitors or users to request a password reset link by submitting their registered email address.
+
+The backend shall generate a secure, temporary reset token and return a privacy-safe confirmation response to avoid disclosing account existence.
+
+---
+
+### FR-003B Password Reset Execution (Reset Password)
+
+The system shall allow users navigating from a valid reset link to specify a new password (minimum 8 characters) and confirmation.
+
+The system shall validate token authenticity and expiration against `password_reset_tokens`, update the user's password securely with bcrypt, and redirect to the login interface upon successful completion.
 
 ---
 
