@@ -923,6 +923,8 @@ The following scenarios should be sufficient for a course presentation.
 | External image URL       | Must Have |
 | User profile             | Must Have |
 | User recipe interaction  | Must Have |
+| Surprise Me Discovery    | Must Have |
+| Download Recipe as PDF   | Must Have |
 | Admin statistics         | Must Have |
 | Responsive design        | Must Have |
 | Advanced analytics       | Excluded  |

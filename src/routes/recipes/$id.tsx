@@ -8,6 +8,7 @@ import { SiteLayout } from "@/components/layout/SiteLayout";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { RecipeInteractionButton } from "@/components/recipe/RecipeInteractionButton";
 import { LoadingIndicator, ErrorState } from "@/components/common/States";
+import { DownloadRecipeButton } from "@/components/recipe/DownloadRecipeButton";
 
 export const Route = createFileRoute("/recipes/$id")({
   component: RecipeDetailsPage,
@@ -64,7 +65,7 @@ function RecipeDetailsPage() {
               onAction={() => (window.location.href = "/recipes")}
             />
           ) : (
-            <div className="space-y-12">
+            <div id="recipe-printable-area" className="space-y-12">
               {/* Recipe Top Header & Image Grid */}
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-start">
                 {/* Recipe Hero Image */}
@@ -73,8 +74,10 @@ function RecipeDetailsPage() {
                     <img
                       src={recipeImage(recipe)}
                       alt={recipe.title}
+                      crossOrigin="anonymous"
                       className="aspect-[4/3] w-full object-cover"
                     />
+
                   </div>
                 </div>
 
@@ -134,9 +137,11 @@ function RecipeDetailsPage() {
                   </div>
 
                   {/* Actions & Interaction Button */}
-                  <div className="pt-2">
+                  <div className="flex flex-wrap items-center gap-3 pt-2">
                     <RecipeInteractionButton recipeId={recipe.id} />
+                    <DownloadRecipeButton recipe={recipe} />
                   </div>
+
                 </div>
               </div>
 

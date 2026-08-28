@@ -13,6 +13,7 @@
 - **Styling**: Tailwind CSS (v4)
 - **Routing**: TanStack Router (File-based routing)
 - **HTTP Client**: Axios with Bearer token interceptor
+- **PDF Generation**: jsPDF (Client-side vector PDF document compiler)
 - **Icons**: Lucide React
 - **Typography**: Google Fonts (`Playfair Display` for editorial serif titles & `Inter` for clean UI controls)
 
@@ -52,6 +53,8 @@ Rosui_Ghor/
 │   ├── Product Requirements Document.md
 │   ├── Design Document.md
 │   ├── Tech Stack Document.md
+│   ├── SURPRISE_ME_FEATURE_AUDIT_REPORT.md
+│   ├── DOWNLOAD_PDF_FEATURE_AUDIT_REPORT.md
 │   ├── frontend-completion-audit.md
 │   ├── frontend-validation-report.md
 │   ├── backend-integration-audit.md
@@ -59,6 +62,8 @@ Rosui_Ghor/
 │   └── api-documentation.md
 ├── src/                      # React 19 Frontend Application
 │   ├── components/           # UI components (auth, recipe, admin, user, common)
+│   │   ├── recipe/           # RecipeCard, RecipeInteractionButton, SurpriseRecipeButton, DownloadRecipeButton
+│   │   ├── layout/           # Navbar, Footer, SiteLayout, AdminLayout
 │   ├── context/              # AuthContext for session management
 │   ├── routes/               # 14 TanStack Router route views (auth, recipes, admin, profile, password reset)
 │   ├── services/             # Axios API client and service layer
@@ -235,6 +240,8 @@ For the complete REST API endpoint reference, request bodies, query parameters, 
 
 ## 🧪 Quality & Validation Reports
 
+- **"Surprise Me" Random Recipe Feature Audit**: [`docs/SURPRISE_ME_FEATURE_AUDIT_REPORT.md`](docs/SURPRISE_ME_FEATURE_AUDIT_REPORT.md)
+- **"Download Recipe as PDF" Feature Audit**: [`docs/DOWNLOAD_PDF_FEATURE_AUDIT_REPORT.md`](docs/DOWNLOAD_PDF_FEATURE_AUDIT_REPORT.md)
 - **Frontend UI/UX Completion Audit**: [`docs/frontend-completion-audit.md`](docs/frontend-completion-audit.md)
 - **Frontend Validation Report**: [`docs/frontend-validation-report.md`](docs/frontend-validation-report.md)
 - **Backend & API Integration Audit**: [`docs/backend-integration-audit.md`](docs/backend-integration-audit.md)

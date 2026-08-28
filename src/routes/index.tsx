@@ -43,6 +43,7 @@ function HomePage() {
     <SiteLayout>
       {/* Hero Section */}
       <section className="relative overflow-hidden py-12 md:py-20 lg:py-24">
+
         <div className="container-page grid items-center gap-12 lg:grid-cols-12">
           {/* Left Hero Content */}
           <div className="lg:col-span-7 space-y-6">

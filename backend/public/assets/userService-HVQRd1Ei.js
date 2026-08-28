@@ -1,1 +1,0 @@
-import{o as e,r as t}from"./AuthContext-OHcREJh2.js";var n={async count(){try{return(await e.get(`/admin/statistics`)).data.total_users}catch{return 0}},updateProfile:t.updateProfile};export{n as t};

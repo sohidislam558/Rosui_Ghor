@@ -262,6 +262,36 @@ The page must handle missing optional content without breaking the layout.
 
 ---
 
+## 10.1 Surprise Me (Random Recipe Discovery)
+
+The application provides a "Surprise Me" action allowing users to instantly discover a random recipe from the existing catalog.
+
+### Behavior:
+- User clicks the **"Surprise Me"** button (in Navbar or Recipe views).
+- The frontend fetches the available recipe collection via `recipeService.all()`.
+- A random index is computed: $\lfloor \text{Math.random()} \times \text{recipes.length} \rfloor$.
+- The router navigates directly to `/recipes/$id` with the selected recipe ID.
+- Features loading state feedback while fetching.
+
+---
+
+## 10.2 Download Recipe as PDF
+
+The recipe details view includes a **"Download PDF"** export button for offline kitchen access.
+
+### Behavior:
+- User clicks **"Download PDF"** on the recipe details page.
+- The client-side `jsPDF` engine compiles the recipe data into a structured vector A4 document:
+  - Header with `Rosui Ghor` branding and divider.
+  - Title, Category, Cook Time, and Difficulty metadata.
+  - Italicized description block.
+  - Ingredients checklist with bullets in a styled container.
+  - Numbered step-by-step cooking instructions with automatic page break overflow.
+  - Page number footer on every page.
+- Triggers instant browser download of `{recipe-title}-recipe.pdf`.
+
+---
+
 ## 11. Recipe Search
 
 The recipe listing page shall contain a search field.

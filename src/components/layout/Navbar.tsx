@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/common/Button";
 import { cn } from "@/lib/utils";
+import { SurpriseRecipeButton } from "@/components/recipe/SurpriseRecipeButton";
 
 interface NavItem {
   label: string;
@@ -73,10 +74,16 @@ export function Navbar() {
               <span className="max-w-36 truncate px-2 text-sm text-muted-foreground font-medium">
                 {user?.name}
               </span>
+
+              <SurpriseRecipeButton variant="ghost" size="sm" label=" Surprise Me" />
+
+
               <Button variant="secondary" size="sm" onClick={handleLogout}>
                 <LogOut className="h-4 w-4" aria-hidden="true" />
                 Logout
               </Button>
+
+
             </>
           ) : (
             <>
@@ -88,6 +95,7 @@ export function Navbar() {
               >
                 Login
               </Link>
+
               <Link
                 to="/register"
                 className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-xs transition-colors hover:bg-primary-hover"
@@ -109,6 +117,7 @@ export function Navbar() {
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
+
 
       {open && (
         <nav

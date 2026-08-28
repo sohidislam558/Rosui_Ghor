@@ -300,7 +300,22 @@ The project should not introduce a large animation dependency simply for visual 
 
 ---
 
-## 13. Backend Stack
+## 13. Client-Side PDF Generation
+
+### jsPDF
+
+`jsPDF` is used for client-side recipe PDF compilation and export.
+
+Use it for:
+
+- Compiling formatted vector recipe PDFs directly in the browser
+- Rendering branded recipe headers, ingredients checklist, and numbered cooking steps
+- Providing instant (< 50ms) offline recipe downloads with automatic pagination
+- Avoiding fragile DOM canvas screenshots and CSS parsing issues
+
+---
+
+## 14. Backend Stack
 
 ### Laravel
 
@@ -1610,9 +1625,10 @@ The existing React, Laravel, and MySQL stack is sufficient.
 | Language         | TypeScript          | Type safety                    |
 | Build Tool       | Vite                | Simple and fast                |
 | Styling          | Tailwind CSS        | Responsive UI                  |
-| Routing          | React Router        | Client-side navigation         |
+| Routing          | TanStack Router     | Type-safe client-side navigation |
 | HTTP             | Axios               | API communication              |
 | Icons            | Lucide React        | Consistent icons               |
+| PDF Generation   | jsPDF               | Client-side vector recipe PDF  |
 | Backend          | Laravel             | REST API and CRUD              |
 | Backend Language | PHP                 | Laravel requirement            |
 | Authentication   | Laravel Sanctum     | SPA/API authentication         |
